@@ -46,7 +46,7 @@ public class LoginController {
     if (AuthenticationResult.FAILED.equals(result)) {
       facesContext.addMessage(
           null,
-          new FacesMessage("Вход не выполнен. Не верные имя пользователя или пароль"));
+          new FacesMessage("Invalid username or password."));
     }
   }
 }

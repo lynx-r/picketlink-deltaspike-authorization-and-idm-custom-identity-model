@@ -33,6 +33,8 @@ import java.util.logging.Logger;
 public class Resources {
   public static final String REALM_ACME_NAME = "Acme";
   public static final String ADMINS_GROUP_NAME = "admins";
+  public static final String ORGANIZERS_GROUP_NAME = "organizers";
+  public static final String CUSTOMERS_GROUP_NAME = "customers";
 
   @PersistenceContext(unitName = "authPU")
   private EntityManager em;

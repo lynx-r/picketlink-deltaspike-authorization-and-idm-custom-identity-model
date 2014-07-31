@@ -51,6 +51,9 @@ public class IDMInitializer {
   private String adminFirstName = "Admin";
   private String adminLastName = "Admin";
 
+  private String organizerLoginName = "organizer";
+  private String customerLoginName = "customer";
+
   @PostConstruct
   public void create() throws Exception {
     Realm acmeRealm = partitionManager.getPartition(Realm.class, Resources.REALM_ACME_NAME);
@@ -80,6 +83,50 @@ public class IDMInitializer {
 
       // add admin as member of admins group
       relationshipManager.add(new GroupMembership(admin, adminsGroup));
+    }
+
+    // let's check if the user is stored by querying by name
+    query.setParameter(User.USER_NAME, organizerLoginName);
+
+    users = query.getResultList();
+
+    if (users.size() == 0) {
+      // if admin doesn't exist create he
+      User user = new User(organizerLoginName);
+      user.setAdmin(false);
+
+      identityManager.add(user);
+      identityManager.updateCredential(user, new Password("organizer"));
+
+      // create admins group
+      Group organizersGroup = addGroup(identityManager, Resources.ORGANIZERS_GROUP_NAME);
+
+      RelationshipManager relationshipManager = partitionManager.createRelationshipManager();
+
+      // add admin as member of admins group
+      relationshipManager.add(new GroupMembership(user, organizersGroup));
+    }
+
+    // let's check if the user is stored by querying by name
+    query.setParameter(User.USER_NAME, customerLoginName);
+
+    users = query.getResultList();
+
+    if (users.size() == 0) {
+      // if admin doesn't exist create he
+      User user = new User(customerLoginName);
+      user.setAdmin(false);
+
+      identityManager.add(user);
+      identityManager.updateCredential(user, new Password("customer"));
+
+      // create admins group
+      Group customersGroup = addGroup(identityManager, Resources.CUSTOMERS_GROUP_NAME);
+
+      RelationshipManager relationshipManager = partitionManager.createRelationshipManager();
+
+      // add admin as member of admins group
+      relationshipManager.add(new GroupMembership(user, customersGroup));
     }
   }
 

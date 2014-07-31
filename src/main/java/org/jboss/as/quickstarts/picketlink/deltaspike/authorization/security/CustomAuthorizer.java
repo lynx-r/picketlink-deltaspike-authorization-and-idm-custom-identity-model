@@ -18,6 +18,8 @@ package org.jboss.as.quickstarts.picketlink.deltaspike.authorization.security;
 
 import org.apache.deltaspike.security.api.authorization.Secures;
 import org.jboss.as.quickstarts.picketlink.deltaspike.authorization.annotations.Admins;
+import org.jboss.as.quickstarts.picketlink.deltaspike.authorization.annotations.Customers;
+import org.jboss.as.quickstarts.picketlink.deltaspike.authorization.annotations.Organizers;
 import org.jboss.as.quickstarts.picketlink.deltaspike.authorization.idm.Group;
 import org.jboss.as.quickstarts.picketlink.deltaspike.authorization.idm.GroupMembership;
 import org.jboss.as.quickstarts.picketlink.deltaspike.authorization.util.Resources;
@@ -54,8 +56,20 @@ public class CustomAuthorizer {
    */
   @Secures
   @Admins
-  public boolean doAdminCheck(Identity identity, IdentityManager identityManager, RelationshipManager relationshipManager) throws Exception {
+  public boolean doAdminsCheck(Identity identity, IdentityManager identityManager, RelationshipManager relationshipManager) throws Exception {
     return hasGroup(identity, identityManager, relationshipManager, Resources.ADMINS_GROUP_NAME);
+  }
+
+  @Secures
+  @Organizers
+  public boolean doOrganizersCheck(Identity identity, IdentityManager identityManager, RelationshipManager relationshipManager) throws Exception {
+    return hasGroup(identity, identityManager, relationshipManager, Resources.ORGANIZERS_GROUP_NAME);
+  }
+
+  @Secures
+  @Customers
+  public boolean doCustomersCheck(Identity identity, IdentityManager identityManager, RelationshipManager relationshipManager) throws Exception {
+    return hasGroup(identity, identityManager, relationshipManager, Resources.CUSTOMERS_GROUP_NAME);
   }
 
   private boolean hasGroup(Identity identity, IdentityManager identityManager, RelationshipManager relationshipManager,

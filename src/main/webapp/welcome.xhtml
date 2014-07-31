@@ -14,13 +14,13 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <h:messages globalOnly="true"/>
+<h:messages globalOnly="true"/>
 
 <h:form id="loginForm" rendered="#{not identity.loggedIn}">
 
@@ -43,29 +43,32 @@
     </div>
 
     <p>
-      Tip: you can login with a either of these accounts:<br/>
-      admin/admin has been granted the admin role
+        Tip: you can login with a either of these accounts:<br/>
+        admin/admin has been added in the admins group<br/>
+        organizer/organizer has been add in the organizators group<br/>
+        customer/customer has been add in the customers group
     </p>
 
 </h:form>
 
 <ui:fragment rendered="#{identity.loggedIn}">
-   <h:form>
- Welcome <b>#{identity.account.userName}</b>!
-       <h:commandButton value="Logout" action="#{identity.logout}" />
-       <p />
-       Execute an action:
-       <h:commandButton value="Admins only Method" action="#{controller.adminMethod}" />
+    <h:form>
+        Welcome <b>#{identity.account.userName}</b>!
+        <h:commandButton value="Logout" action="#{identity.logout}"/>
 
-       <ui:fragment rendered="#{authorizationChecker.hasGroup('admins')}">
-           <div>You are a member of the 'admins' group.</div>
-       </ui:fragment>
+        <p/>
+        Execute an action:
+        <h:commandButton value="Admins only Method" action="#{controller.adminMethod}"/>
 
-       <p>
-         Users with the "employee" role may only invoke the employees-only method, while users with
-         the "admin" role may invoke both methods.
-       </p>
-   </h:form>
+        <ui:fragment rendered="#{authorizationChecker.hasGroup('admins')}">
+            <div>You are a member of the 'admins' group.</div>
+        </ui:fragment>
+
+        <p>
+            Users with the "employee" role may only invoke the employees-only method, while users with
+            the "admin" role may invoke both methods.
+        </p>
+    </h:form>
 </ui:fragment>
 
 
